@@ -2,8 +2,9 @@ package Java412;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 
-public class MyArrayList<T> {
+public class MyArrayList<T> implements MyArray<T> {
     private T[] array;
     private static final int DEFAULT_CAPACITY = 16;
     private static final int MULTIPLIER = 2;
@@ -22,6 +23,7 @@ public class MyArrayList<T> {
 
     }
 
+    @Override
     public void add(T element) {
 
         if (pointer >= array.length)
@@ -32,6 +34,7 @@ public class MyArrayList<T> {
 
     }
 
+    @Override
     public void insert(int index, T element) {
 
         if (index == pointer) {
@@ -50,10 +53,12 @@ public class MyArrayList<T> {
 
     }
 
+    @Override
     public T get(int index) {
         return array[index];
     }
 
+    @Override
     public T remove(int index) {
 
         checkIndexBounds(index);
@@ -66,11 +71,13 @@ public class MyArrayList<T> {
 
     }
 
+    @Override
     public void clear() {
         Arrays.fill(array, null);
         pointer = 0;
     }
 
+    @Override
     public void sort(Comparator<? super T> comparator) {
         quickSort(0, pointer - 1, comparator);
     }
@@ -80,7 +87,6 @@ public class MyArrayList<T> {
         if (leftArrayBound >= rightArrayBound)
             return;
 
-
         int middle = leftArrayBound + ((rightArrayBound - leftArrayBound) / 2);
         T pivot = array[middle];
 
@@ -88,6 +94,7 @@ public class MyArrayList<T> {
         int rightBound = rightArrayBound;
 
         while (leftBound <= rightBound) {
+
             while (comparator.compare(array[leftBound], pivot) < 0) {
                 leftBound++;
             }
@@ -116,6 +123,7 @@ public class MyArrayList<T> {
 
     }
 
+    @Override
     public int size() {
         return pointer;
     }
@@ -131,6 +139,11 @@ public class MyArrayList<T> {
         System.arraycopy(array, 0, newArray, 0, array.length);
         array = newArray;
 
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayIterator<>(array);
     }
 
 }
