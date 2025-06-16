@@ -8,6 +8,7 @@ import java.util.*;
  * @param <T> the type of elements returned by the iterator
  */
 public class ArrayIterator<T> implements Iterator<T> {
+    private final int listPointer;
     private int index = 0;
     /**
      * The Values.
@@ -18,18 +19,12 @@ public class ArrayIterator<T> implements Iterator<T> {
      * Instantiates a new Array iterator.
      *
      * @param values the values
+     * @param pointer last non-null element in MyArrayList
      */
-    ArrayIterator(T[] values) {
+    ArrayIterator(T[] values, int pointer) {
 
-        ArrayList<T> nonNullValues = new ArrayList<>();
-
-        for (T value : values) {
-            if (value != null) {
-                nonNullValues.add(value);
-            }
-        }
-
-        this.values = (T[]) nonNullValues.toArray();
+        this.listPointer = pointer;
+        this.values = values;
 
     }
 
@@ -40,7 +35,7 @@ public class ArrayIterator<T> implements Iterator<T> {
      */
     @Override
     public boolean hasNext() {
-        return index < values.length;
+        return index < listPointer;
     }
 
     /**

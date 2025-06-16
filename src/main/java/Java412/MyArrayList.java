@@ -204,7 +204,7 @@ public class MyArrayList<T> implements MyArray<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator<>(array);
+        return new ArrayIterator<>(array, pointer);
     }
 
 }
