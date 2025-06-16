@@ -1,8 +1,6 @@
 package Java412;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
@@ -12,8 +10,6 @@ public class Application {
         listInt.add(17);
         listInt.add(8);
         listInt.add(10);
-
-        List<Integer> list = new ArrayList<>();
 
         listInt.remove(3);
 

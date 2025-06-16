@@ -4,16 +4,29 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 
+/**
+ * Implementation of MyArrayList.
+ *
+ * @param <T> the type of elements returned by the iterator
+ */
 public class MyArrayList<T> implements MyArray<T> {
     private T[] array;
     private static final int DEFAULT_CAPACITY = 16;
     private static final int MULTIPLIER = 2;
     private int pointer = 0;
 
+    /**
+     * Constructs an empty list with default size.
+     */
     public MyArrayList() {
         this.array = (T[]) new Object[DEFAULT_CAPACITY];
     }
 
+    /**
+     * Constructs an empty list of specified size.
+     *
+     * @param capacity size of a new MyArrayList
+     */
     public MyArrayList(int capacity) {
 
         if (capacity <= 0)
@@ -23,6 +36,11 @@ public class MyArrayList<T> implements MyArray<T> {
 
     }
 
+    /**
+     * Add element into list.
+     *
+     * @param element inserted element
+     */
     @Override
     public void add(T element) {
 
@@ -34,6 +52,13 @@ public class MyArrayList<T> implements MyArray<T> {
 
     }
 
+    /**
+     * Insert an element into list at the specified position.
+     *
+     * @param index position to insert element
+     * @param element inserted element
+     * @throws IndexOutOfBoundsException if index is out of range
+     */
     @Override
     public void insert(int index, T element) {
 
@@ -53,30 +78,56 @@ public class MyArrayList<T> implements MyArray<T> {
 
     }
 
+    /**
+     * Get element from list at the specified position.
+     *
+     * @param index position to get from list if it exists
+     * @return returns element by index
+     * @throws IndexOutOfBoundsException if index is out of range
+     */
     @Override
     public T get(int index) {
-        return array[index];
-    }
-
-    @Override
-    public T remove(int index) {
 
         checkIndexBounds(index);
-        T element = array[index];
+
+        return array[index];
+
+    }
+
+    /**
+     * Delete an element from list.
+     * Shifts any subsequent elements to the left.
+     *
+     * @param index position to remove element in list if it exists
+     * @throws IndexOutOfBoundsException if index is out of range
+     */
+    @Override
+    public void remove(int index) {
+
+        checkIndexBounds(index);
         System.arraycopy(array, index + 1, array, index, pointer - index - 1);
         pointer--;
         array[pointer] = null;
 
-        return element;
-
     }
 
+    /**
+     * Removes all elements from list.
+     */
     @Override
     public void clear() {
+
         Arrays.fill(array, null);
         pointer = 0;
+
     }
 
+    /**
+     * Sorts the list according to the order of passed comparator.
+     *
+     * @param comparator used to compare list elements
+     * @throws NullPointerException if the list contains {@code null} elements
+     */
     @Override
     public void sort(Comparator<? super T> comparator) {
         quickSort(0, pointer - 1, comparator);
@@ -123,6 +174,11 @@ public class MyArrayList<T> implements MyArray<T> {
 
     }
 
+    /**
+     * Returns the number of elements in list.
+     *
+     * @return the number of elements in list
+     */
     @Override
     public int size() {
         return pointer;
@@ -141,6 +197,11 @@ public class MyArrayList<T> implements MyArray<T> {
 
     }
 
+    /**
+     * Creates an Iterator with current list values.
+     *
+     * @return returns new Iterator with list values
+     */
     @Override
     public Iterator<T> iterator() {
         return new ArrayIterator<>(array);
