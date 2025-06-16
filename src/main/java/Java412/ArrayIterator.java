@@ -22,6 +22,7 @@ public class ArrayIterator<T> implements Iterator<T> {
     ArrayIterator(T[] values) {
 
         ArrayList<T> nonNullValues = new ArrayList<>();
+
         for (T value : values) {
             if (value != null) {
                 nonNullValues.add(value);
