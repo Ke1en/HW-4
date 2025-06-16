@@ -20,6 +20,7 @@ public class ArrayIterator<T> implements Iterator<T> {
      * @param values the values
      */
     ArrayIterator(T[] values) {
+
         ArrayList<T> nonNullValues = new ArrayList<>();
         for (T value : values) {
             if (value != null) {
@@ -28,6 +29,7 @@ public class ArrayIterator<T> implements Iterator<T> {
         }
 
         this.values = (T[]) nonNullValues.toArray();
+
     }
 
     /**
