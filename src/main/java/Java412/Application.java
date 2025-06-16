@@ -5,7 +5,7 @@ import java.util.Comparator;
 public class Application {
     public static void main(String[] args) {
 
-        MyArrayList<Integer> listInt = new MyArrayList<>(5);
+        MyArray<Integer> listInt = new MyArrayList<>(5);
         listInt.add(4);
         listInt.add(17);
         listInt.add(8);

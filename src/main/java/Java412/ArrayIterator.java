@@ -1,6 +1,6 @@
 package Java412;
 
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Array iterator for MyArrayList iteration.
@@ -12,7 +12,7 @@ public class ArrayIterator<T> implements Iterator<T> {
     /**
      * The Values.
      */
-    T[] values;
+    private final T[] values;
 
     /**
      * Instantiates a new Array iterator.
@@ -20,7 +20,14 @@ public class ArrayIterator<T> implements Iterator<T> {
      * @param values the values
      */
     ArrayIterator(T[] values) {
-        this.values = values;
+        ArrayList<T> nonNullValues = new ArrayList<>();
+        for (T value : values) {
+            if (value != null) {
+                nonNullValues.add(value);
+            }
+        }
+
+        this.values = (T[]) nonNullValues.toArray();
     }
 
     /**
@@ -42,4 +49,5 @@ public class ArrayIterator<T> implements Iterator<T> {
     public T next() {
         return values[index++];
     }
+
 }
