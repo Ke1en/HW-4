@@ -106,6 +106,7 @@ class MyArrayListTest {
         if (removeIndex >= 0 && removeIndex < testDefaultList.size()) {
             int removedIndex = testDefaultList.get(removeIndex);
             testDefaultList.remove(removeIndex);
+
             assertNotEquals(removedIndex, testDefaultList.get(removeIndex));
         }
 
@@ -125,6 +126,22 @@ class MyArrayListTest {
 
         testDefaultList.sort(Comparator.reverseOrder());
         assertEquals(8, testDefaultList.get(0));
+
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "'1,2,3,4,5'"
+    })
+    void clear_whenCalled_thenListIsEmpty(String values) {
+
+        for (String value : values.split(","))
+            testDefaultList.add(Integer.parseInt(value));
+
+        testDefaultList.clear();
+
+        assertEquals(0, testDefaultList.size());
+        assertThrows(IndexOutOfBoundsException.class, () -> testDefaultList.get(0));
 
     }
 
@@ -153,6 +170,35 @@ class MyArrayListTest {
     }
 
     @Test
+    void size_whenElementAddedOrRemoved_thenSizeIsCorrect() {
+
+        assertEquals(0, testDefaultList.size());
+        testDefaultList.add(1);
+        assertEquals(1, testDefaultList.size());
+        testDefaultList.add(2);
+        assertEquals(2, testDefaultList.size());
+        testDefaultList.remove(0);
+        assertEquals(1, testDefaultList.size());
+        testDefaultList.clear();
+        assertEquals(0, testDefaultList.size());
+
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "'1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20'"
+    })
+    void add_whenElementAddedAfterListReachDefaultCapacity_thenCapacityResized(String values){
+
+        for (String value : values.split(",")) {
+            testDefaultList.add(Integer.parseInt(value));
+
+            assertEquals(Integer.parseInt(value), testDefaultList.size());
+        }
+
+    }
+
+    @Test
     void newMyArrayList_whenCreated_thenThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> {MyArray<Integer> newList = new MyArrayList<>(0);});
     }
@@ -165,6 +211,16 @@ class MyArrayListTest {
     @Test
     void insert_WhenInvalidIndex_thenThrowsException() {
         assertThrows(IndexOutOfBoundsException.class, () -> testDefaultList.insert(1, 1));
+    }
+
+    @Test
+    void insert_whenInvalidIndexIsNegative_thenThrowsException() {
+        assertThrows(IndexOutOfBoundsException.class, () -> testDefaultList.insert(-1, 1));
+    }
+
+    @Test
+    void remove_whenListIsEmptry_thenThrowsException() {
+        assertThrows(IndexOutOfBoundsException.class, () -> testDefaultList.remove(0));
     }
 
 }
